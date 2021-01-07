@@ -12,6 +12,7 @@ import {
   Link
 } from "react-router-dom";
 import Login from './components/Login';
+import Registrar from './components/Registrar';
 
 
 
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/registrar">
+            <Registrar />
           </Route>
           <Route path="/">
             <HomeScreen />

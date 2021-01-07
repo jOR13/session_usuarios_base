@@ -1,11 +1,10 @@
-import React from 'react'
+import React from "react";
 
 function Historial() {
-    return (
-        <div>
-            <h1>history</h1>
-        </div>
-    )
+  return (
+    <div>
+      <h1>Historico</h1>s{" "}
+    </div>
+  );
 }
-
-export default Historial
+export default Historial;
