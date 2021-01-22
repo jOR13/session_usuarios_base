@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
+import { UserContext } from "../context/UserContext";
 
 import {
   BrowserRouter as Router,
@@ -8,9 +10,29 @@ import {
 } from "react-router-dom";
 
 function NavBar() {
-  const [usuario, setUsuario] = useState(localStorage.getItem("usuario"));
+  const usr = JSON.parse(localStorage.getItem("usuario"));
+  const [usuario, setUsuario] = useState(usr);
 
-  console.log(usuario);
+
+  //console.log(userCon)
+
+
+  // const { userLog, setUserLog } = useContext(UserContext);
+
+  
+  // if (usr != null) {
+  // //  console.log({ usuario: usuario.user });
+  // }
+
+  useEffect(() => {
+    console.log('useEffect ejecutado');
+  },[usuario]);
+
+  const CerrarSession = () => {
+    localStorage.removeItem("usuario");
+    setUsuario("")
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -48,12 +70,12 @@ function NavBar() {
                   className="nav-link"
                   aria-current="page"
                 >
-                  Juegos
+                  Agregar
                 </NavLink>
               </li>
             </ul>
 
-            {usuario === null || usuario === "" ? (
+            {usr === null || usr === "" ? (
               <ul className="navbar-nav">
                 <li className="nav-item">
                   <NavLink
@@ -116,7 +138,11 @@ function NavBar() {
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a
+                        onClick={() => CerrarSession()}
+                        className="dropdown-item"
+                        href="#"
+                      >
                         Cerrar session
                       </a>
                     </li>

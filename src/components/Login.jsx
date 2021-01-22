@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,12 +10,21 @@ import {
   Link,
 } from "react-router-dom";
 
+import { UserContext } from "../context/UserContext";
+
+
 
 const Login = () => {
   let history = useHistory();
   //context user
+
   const [user, setUser] = useState({});
+  
   const { email, password } = user;
+
+  useEffect(() => {
+    console.log("useEffect ejecutado");
+  }, []);
 
   //lee contenidos del input
   const onChangeProyecto = (e) => {
@@ -40,13 +49,18 @@ const Login = () => {
         },
       });
 
-      console.log("respuesta del login "+response.data.user);
-     
-      localStorage.setItem('usuario', JSON.stringify(response.data));
+      console.log("respuesta del login " + response.data.user);
 
-      // if (userLog != "") {
-      //   history.push("/dashboard");
-      // }
+      const usuario = localStorage.setItem(
+        "usuario",
+        JSON.stringify(response.data)
+      );
+
+      
+
+     // if (userLog != "") {
+        history.push("/");
+     // }
 
       toast.success("✔ Se inicio con exito!", {
         position: "bottom-right",
@@ -74,49 +88,47 @@ const Login = () => {
   return (
     <>
       {/* {userLog === "" ? ( */}
-        <div className="container mt-4">
-          <div className="row">
-            <div className="col-md-6">
-              <form onSubmit={(e) => inciarSesion(e)}>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Email address</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter email"
-                    name="email"
-                    onChange={onChangeProyecto}
-                    value={email}
-                  />
-                  <small id="emailHelp" className="form-text text-muted">
-                    We'll never share your email with anyone else.
-                  </small>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="exampleInputPassword1"
-                    name="password"
-                    placeholder="Password"
-                    onChange={onChangeProyecto}
-                    value={password}
-                  />
-                </div>
-
-                <button type="submit" className="btn btn-primary">
-                  Submit
-                </button>
-                <ToastContainer />
-              </form>
-              <Link to="/registrar">Registrarse</Link>
-            </div>
+      <div className="container mt-4">
+        <div className="row">
+          <div className="col-md-6">
+            <form onSubmit={(e) => inciarSesion(e)}>
+              <div className="form-group">
+                <label htmlFor="exampleInputEmail1">Email address</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                  name="email"
+                  onChange={onChangeProyecto}
+                  value={email}
+                />
+                <small id="emailHelp" className="form-text text-muted">
+                  We'll never share your email with anyone else.
+                </small>
+              </div>
+              <div className="form-group">
+                <label htmlFor="exampleInputPassword1">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="exampleInputPassword1"
+                  name="password"
+                  placeholder="Password"
+                  onChange={onChangeProyecto}
+                  value={password}
+                />
+              </div>
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+              <ToastContainer />
+            </form>
+            <Link to="/registrar">Registrarse</Link>
           </div>
         </div>
-    
+      </div>
     </>
   );
 };

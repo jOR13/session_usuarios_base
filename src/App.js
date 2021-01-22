@@ -1,5 +1,5 @@
 
-import React  from 'react';
+import React, {useState}  from 'react';
 import NavBar from './components/NavBar';
 import HomeScreen from './components/HomeScreen';
 import Juegos from './components/Juegos';
@@ -13,33 +13,44 @@ import {
 } from "react-router-dom";
 import Login from './components/Login';
 import Registrar from './components/Registrar';
+import Historial from './components/Historial';
 
+import { UserContext } from "./context/UserContext";
 
 
 function App() {
+  const [userCon, setUserCon] = useState({});
   return (
-    <>
     
+    <>
     <Router>
     
     <NavBar/>
      
     <Switch>
-          <Route path="/juegos">
+    <UserContext.Provider value={{
+            userCon,
+            setUserCon
+        }}>
+          <Route exact path="/juegos">
             <Juegos />
           </Route>
-          <Route path="/perfil">
+          <Route exact path="/perfil">
             <Perfil />
           </Route>
-          <Route path="/login">
+          <Route exact path="/login">
             <Login />
           </Route>
-          <Route path="/registrar">
+          <Route exact path="/historial">
+            <Historial />
+          </Route>
+          <Route exact path="/registrar">
             <Registrar />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <HomeScreen />
           </Route>
+        </UserContext.Provider>
         </Switch>
     </Router>
     </>
